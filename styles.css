@@ -1,0 +1,784 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f9fc;
+    color: #333;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #013251;
+    padding: 15px 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/* Hero Section with Overlay */
+.hero {
+    position: relative;
+    background-image: url('vet-clinic.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 0;
+    text-align: center;
+    color: white;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 51, 102, 0.6); /* Dark blue overlay for text clarity */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.hero-content h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: white;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8); /* Text shadow for better readability */
+}
+
+.hero-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8); /* Text shadow for better readability */
+}
+
+.hero .btn {
+    background-color: #005470;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.hero .btn:hover {
+    background-color: #007399;
+    transform: scale(1.05);
+}
+
+/* Services Section */
+/* Services Section */
+.services {
+    padding: 50px 0;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.services .container {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+}
+
+.service {
+    max-width: 250px;
+    text-align: center;
+}
+
+.service img {
+    width: 120px; /* Increase the size from 80px to 120px */
+    margin-bottom: 15px;
+}
+
+.service h3 {
+    font-size: 20px;
+    color: #004d80;
+    margin-bottom: 5px;
+}
+
+.service p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Forms and Buttons */
+.container label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #004d80;
+}
+
+.container input,
+.container select,
+.container textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s;
+}
+
+.container input:hover,
+.container select:hover,
+.container textarea:hover {
+    border-color: #005c7a;
+}
+
+.container input:focus,
+.container select:focus,
+.container textarea:focus {
+    border-color: #007399;
+    outline: none;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #005c7a;
+    color: white;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background-color: #007399;
+    transform: scale(1.02);
+}
+
+/* Confirmation Message */
+.confirmation {
+    background-color: #e6f7ff;
+    color: #004d80;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #013251;
+    color: #ffffff;
+    padding: 30px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 20px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-section p, .footer-section ul {
+    font-size: 14px;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    margin-top: 20px;
+    font-size: 12px;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-content h2 {
+        font-size: 28px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+
+    .services .container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .service {
+        max-width: 100%;
+    }
+}
+
+/* Confirmation Page Styles */
+.confirmation {
+    text-align: center;
+    padding: 20px;
+}
+
+.confirmation h2 {
+    font-size: 24px;
+    color: #004d80;
+}
+
+.confirmation p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+/* Patient History Section */
+.patient-history {
+    padding: 50px 0;
+    background-color: #f4f9fc;
+    text-align: center;
+}
+
+#searchForm {
+    margin-bottom: 30px;
+}
+
+#searchForm label {
+    font-weight: bold;
+    color: #004d80;
+}
+
+#searchForm button {
+    background-color: #005470;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+#searchForm button:hover {
+    background-color: #007399;
+
+}
+/* Smaller Enter Button Styling */
+button {
+    padding: 6px 12px; /* Smaller padding for compact size */
+    font-size: 14px;   /* Smaller font size */
+    background-color: #005c7a;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #007399;
+}
+
+
+
+/* Pet Info Card */
+.pet-info-card {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.pet-info-card p {
+    font-size: 18px;
+    color: #333;
+    margin: 10px 0;
+}
+
+.pet-info-card p strong {
+    color: #004d80;
+}
+
+/* Pet Care Section */
+.pet-care-section {
+    padding: 50px 0;
+    background-color: #f4f9fc;
+    text-align: center;
+}
+
+.pet-care-section h2 {
+    color: #004d80;
+    margin-bottom: 20px;
+}
+
+.pet-care-card {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.pet-care-card h3 {
+    color: #005c7a;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.pet-care-card p {
+    font-size: 16px;
+    color: #333;
+    margin: 8px 0;
+}
+
+.pet-care-card p strong {
+    color: #004d80;
+}
+
+/* General Button Styling */
+button {
+    padding: 8px 16px;
+    background-color: #005c7a;
+    color: #ffffff;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #007399;
+}
+
+/* Follow-Up Section */
+.follow-up-section {
+    padding: 50px 0;
+    background-color: #f4f9fc;
+    text-align: center;
+}
+
+.follow-up-section h2 {
+    color: #004d80;
+    margin-bottom: 20px;
+}
+
+.follow-up-card {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.follow-up-card h3 {
+    color: #005c7a;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.follow-up-card p {
+    font-size: 16px;
+    color: #333;
+    margin: 8px 0;
+}
+
+.follow-up-card p strong {
+    color: #004d80;
+}
+
+/* General Button Styling */
+button {
+    padding: 8px 16px;
+    background-color: #005c7a;
+    color: #ffffff;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #007399;
+}
+/* Confirmation Message */
+.confirmation {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #e6f7ff;
+    border: 1px solid #b3e0f2;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: #004d80;
+}
+
+.confirmation h2 {
+    font-size: 24px;
+    color: #005c7a;
+    margin-bottom: 10px;
+}
+
+.confirmation p {
+    font-size: 16px;
+    color: #333;
+    margin: 8px 0;
+}
+
+/* General Styling for Data Display */
+.data-display {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    color: #333;
+    text-align: left;
+}
+
+.data-display p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.data-display p strong {
+    color: #004d80;
+}
+
+/* Success Button Styling */
+.confirmation button, .data-display button {
+    padding: 10px 20px;
+    background-color: #005c7a;
+    color: #ffffff;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+    text-decoration: none;
+}
+
+.confirmation button:hover, .data-display button:hover {
+    background-color: #007399;
+    transform: scale(1.05);
+}
+
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f9fc;
+    color: #333;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #013251;
+    padding: 15px 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #00aaff;
+}
+
+/* Main Dashboard Content */
+.container h2 {
+    font-size: 32px;
+    color: #013251;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Quick Links Section */
+.admin-quick-links {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.admin-card {
+    flex: 1;
+    max-width: 250px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: #333;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+}
+
+.admin-card h3 {
+    font-size: 22px;
+    color: #005c7a;
+    margin-bottom: 10px;
+}
+
+.admin-card p {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Footer */
+footer {
+    background-color: #013251;
+    color: #ffffff;
+    padding: 15px 0;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 40px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .admin-quick-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-card {
+        max-width: 100%;
+    }
+
+    .navbar .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+/* Table Styles */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-table th, .admin-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.admin-table th {
+    background-color: #013251;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.admin-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.admin-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.admin-table button {
+    padding: 6px 12px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #005c7a;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 5px;
+}
+
+.admin-table button:hover {
+    background-color: #007399;
+}
+
+.admin-table button.danger {
+    background-color: #d9534f;
+}
+
+.admin-table button.danger:hover {
+    background-color: #c9302c;
+}
+/* Patient History Card */
+.patient-history-card {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.patient-history-card h3 {
+    font-size: 24px;
+    color: #004d80;
+    margin-bottom: 15px;
+}
+
+.patient-history-card p {
+    font-size: 16px;
+    color: #333;
+    margin: 8px 0;
+}
+
+.patient-history-card p strong {
+    color: #004d80;
+}
+
+/* Search Form */
+#searchForm {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#searchForm label {
+    font-weight: bold;
+    color: #004d80;
+    margin-right: 10px;
+}
+
+#searchForm input[type="text"] {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+}
+
+#searchForm button {
+    padding: 10px 20px;
+    background-color: #005c7a;
+    color: #ffffff;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#searchForm button:hover {
+    background-color: #007399;
+}
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <h1 class="logo">VETZ</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="book-appointment.html">Book Appointment</a></li>
+                    <li><a href="follow-up.html">Follow-up</a></li>
+                    <li><a href="pet-care.html">Pet-Care</a></li>
+                    <li><a href="patient-history.html">Patient History</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Appointment Booking Form -->
+    <div class="container">
+        <h2>Book an Appointment</h2>
+        <form id="appointmentForm" action="submit-booking.php" method="POST">
+            <label for="petName">Pet Name</label>
+            <input type="text" id="petName" name="petName" placeholder="Enter pet's name" required>
+        
+            <label for="ownerName">Owner's Name</label>
+            <input type="text" id="ownerName" name="ownerName" placeholder="Enter owner's name" required>
+
+            <label for="contact">Contact</label>
+            <input type="text" id="contact" name="contact" placeholder="Enter owner's contact" required>
+        
+            <label for="appointmentDate">Date</label>
+            <input type="date" id="appointmentDate" name="appointmentDate" required>
+        
+            <label for="appointmentTime">Time</label>
+            <input type="time" id="appointmentTime" name="appointmentTime" required>
+        
+            <button type="submit">Confirm Appointment</button>
+        </form>        
+    </div>
+
+</body>
+</html>
