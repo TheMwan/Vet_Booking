@@ -17,3 +17,9 @@ Vetzis a website that allows pet owners to book appointments, track pet health f
 - **Pet Records**: Maintain medical history, treatments, and health status.
 - **Dashboard**: Track schedules and upcoming appointments.
 - **User Management**: Manage pet owner accounts and their pets.
+
+## 🔧 Tech Stack  
+- **Frontend**: HTML, CSS  
+- **Backend**: PHP  
+- **Database**: MySQL (via MAMP)  
+- **Environment**: MAMP for local development  
