@@ -1,6 +1,6 @@
 # 🐾 Vetz Web Application
 
-Vetzis a website that allows pet owners to book appointments, track pet health follow-ups, and enables administrators (veterinarians and staff) to manage appointments, pets, and records** in one seamless platform.
+Vetzis a website that allows pet owners to **book appointments**, **track pet health follow-ups**, and enables administrators (veterinarians and staff) to **manage appointments, pets, and records in one seamless platform.
 
 ---
 
