@@ -640,3 +640,99 @@ body {
     text-decoration: underline;
 }
 
+/* General Input Styles */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px; /* Consistent padding */
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* Hover and Focus States for Consistency */
+.login-container input[type="text"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #005c7a;
+    outline: none;
+}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f9fc;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    background-color: #013251;
+    padding: 15px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    color: #013251;
+    margin-bottom: 20px;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.admin-table th, .admin-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #013251;
+    color: white;
+}
+
+.admin-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    margin-right: 5px;
+}
+
+button.danger {
+    background-color: #d9534f;
+}
+
+button.danger:hover {
+    background-color: #c9302c;
+}

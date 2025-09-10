@@ -13,11 +13,12 @@
             <h1 class="logo">VETZ</h1>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="book-appointment.html">Book Appointment</a></li>
-                    <li><a href="follow-up.html">Follow-up</a></li>
-                    <li><a href="pet-care.html">Pet-Care</a></li>
-                    <li><a href="patient-history.html">Patient History</a></li>
+                    <li><a href="admin-dashboard.html">Dashboard</a></li>
+                    <li><a href="admin-appointments.php">View Appointments</a></li>
+                    <li><a href="admin-follow-up.html">Follow Up</a></li>
+                    <li><a href="admin-pet-care.html">Pet Care</a></li>
+                    <li><a href="admin-user.html">Admin</a></li>
+                    <li><a href="user_report.php">Report</a></li>
                 </ul>
             </nav>
         </div>
@@ -26,30 +27,31 @@
     <!-- Follow-Up Content -->
     <div class="container">
         <h2>Follow-Up Information</h2>
-        <form action="submit-followup.php" method="POST">
-            <label for="petName">Pet Name</label>
-            <input type="text" id="petName" name="petName" placeholder="Enter Pet Name" required>
-
+        <form action="admin-follow-up.php" method="POST">
+            <label for="petID">Pet's ID</label>
+            <input type="text" id="petID" name="PatientID" placeholder="Enter Pet ID" required>
+        
             <label for="lastTreatmentDate">Last Treatment Date</label>
-            <input type="date" id="lastTreatmentDate" name="lastTreatmentDate" required>
-
+            <input type="date" id="lastTreatmentDate" name="LastTreatmentDate" required>
+        
             <label for="recoveryStatus">Recovery Status</label>
-            <textarea id="recoveryStatus" name="recoveryStatus" placeholder="Enter recovery status" required></textarea>
-
+            <textarea id="recoveryStatus" name="RecoveryStatus" placeholder="Enter recovery status" required></textarea>
+        
             <label for="nextCheckUpDate">Next Check-Up Date</label>
             <input type="date" id="nextCheckUpDate" name="nextCheckUpDate" required>
-
+        
             <label for="nextCheckUpTime">Next Check-Up Time</label>
             <input type="time" id="nextCheckUpTime" name="nextCheckUpTime" required>
-
+        
             <label for="notes">Notes</label>
             <textarea id="notes" name="notes" placeholder="Enter any additional notes" required></textarea>
-
+        
             <label for="specialInstructions">Special Instructions</label>
             <textarea id="specialInstructions" name="specialInstructions" placeholder="Enter special instructions" required></textarea>
-
-            <button type="submit">Save Follow-Up</button>
+        
+                <button type="submit">Submit</button>
         </form>
+        
     </div>
 </body>
 </html>

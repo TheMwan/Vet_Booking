@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - VETZ</title>
+    <link rel="stylesheet" href="../styles2.css">
+    <script defer>
+
+function logout() {
+            if (confirm('Are you sure you want to log out?')) {
+                window.location.href = '../index_login.html';
+            }
+        }
+function toggleEditMode() {
+            const editBtn = document.getElementById('editBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const userForm = document.getElementById('userForm');
+
+            // Check if Save button is visible (i.e., in edit mode)
+            const isEditing = saveBtn.style.display === 'inline-block';
+
+            if (isEditing) {
+                // Switch to view mode
+                saveBtn.style.display = 'none';
+                editBtn.style.display = 'inline-block';
+
+                // Disable the input fields
+                document.getElementById('UserName').disabled = true;
+                document.getElementById('Name').disabled = true;
+                document.getElementById('Email').disabled = true;
+                document.getElementById('Phone').disabled = true;
+
+                // Submit the form
+                userForm.submit();
+            } else {
+                // Switch to edit mode
+                editBtn.style.display = 'none';
+                saveBtn.style.display = 'inline-block';
+
+                // Enable the input fields
+                document.getElementById('UserName').disabled = false;
+                document.getElementById('Name').disabled = false;
+                document.getElementById('Email').disabled = false;
+                document.getElementById('Phone').disabled = false;
+            }
+        }
+
+        window.onload = function() {
+    fetch('../user.php') // Fetch user data from user.php
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                window.location.href = 'login.html'; // Redirect to login page if not logged in
+            } else {
+                // Populate the form fields with the user data
+                document.getElementById('UserName').value = data.UserName;
+                document.getElementById('Name').value = data.Name;
+                document.getElementById('Email').value = data.Email;
+                document.getElementById('Phone').value = data.Phone;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error);
+            alert('An error occurred while fetching user data.');
+        });
+};
+
+ </script>
+</head>
+
+<body>
+
+    <!-- Navbar Section -->
+    <header class="navbar">
+        <div class="container">
+            <h1 class="logo">VETZ</h1>
+            <nav class="nav-center">
+                <ul class="nav-links">
+                    <li><a href="admin-dashboard.html">Dashboard</a></li>
+                    <li><a href="admin-appointments.php">View Appointments</a></li>
+                    <li><a href="admin-follow-up.html">Follow Up</a></li>
+                    <li><a href="admin-pet-care.html">Pet Care</a></li>
+                    <li><a href="admin-user.html">Admin</a></li>
+                    <li><a href="user_report.php">Report</a></li>
+                </ul>
+            </nav>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+ <!-- Profile Section -->
+    <div class="container">
+        <h2>User Profile</h2>
+        <div class="profile">
+            <div class="user-info">
+                <form id="userForm" method="POST" action="admin-update-profile.php">
+                    <div class="form-group">
+                        <label for="UserName">Username</label>
+                        <input type="text" id="UserName" name="UserName" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" id="Name" name="Name" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="email" id="Email" name="Email" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone">Phone</label>
+                        <input type="phone" id="Phone" name="Phone" required disabled>
+                    </div>
+                    <button type="button" id="editBtn" onclick="toggleEditMode()">Edit</button>
+                    <button type="submit" id="saveBtn" style="display:none;">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+ <footer>
+
+         <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: contact@vetzclinic.com</p>
+                <p>Phone: +1 (800) 555-0199</p>
+                <p>Address: 123 Pet Care Ave, Pet City, PC 12345</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="admin-dashboard.html">Dashboard</a></li>
+                        <li><a href="admin-appointments.php">View Appointments</a></li>
+                        <li><a href="admin-follow-up.html">Follow Up</a></li>
+                        <li><a href="admin-pet-care.html">Pet Care</a></li>
+                        <li><a href="admin-user.html">Admin</a></li>
+                        <li><a href="user_report.php">Report</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <p>&copy; 2024 VETZ Clinic. All rights reserved.</p>
+
+    </footer>
+
+    <style>
+
+<style>
+        /* Navbar */
+        .navbar {
+            background-color: #013251;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Centering the nav links */
+        .nav-center {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .nav-links {
+            list-style-type: none;
+            display: inline-flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00aaff;
+        }
+
+        /* Logo */
+        .logo {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: auto;
+        }
+
+        /* Logout button styling */
+        .logout-btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .logout-btn {
+                margin-top: 10px;
+            }
+        }
+        .editable-box {
+            margin-bottom: 15px;
+        }
+
+        .editable-box input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        #saveBtn {
+            background-color: #28a745;
+        }
+
+        #saveBtn:hover {
+            background-color: #218838;
+        }
+
+        #editBtn {
+            background-color: #007bff;
+        }
+
+        #editBtn:hover {
+            background-color: #0056b3;
+        }
+
+       /* Footer */
+footer {
+    background-color: #013251;
+    color: white;
+    padding: 20px 0;
+    width: 100%;
+    box-sizing: border-box;  /* Ensure padding doesn't affect the width */
+    position: relative;
+}
+
+.footer-container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.footer-section {
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.footer-section p,
+.footer-section ul {
+    font-size: 14px;
+    color: #cfd8dc;
+    line-height: 1.5;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #cfd8dc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #00aaff;
+}
+
+footer p {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #b0bec5;
+    text-align: center;
+}
+
+/* Full width footer on all screens */
+footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 20px 0;
+}
+
+        /* Logo */
+        .logo {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: auto;
+        }
+
+        /* Logout button styling */
+        .logout-btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #0056b3;
+        }
+    
+        .show {
+    display: inline-block;
+}
+
+/* When "hide" class is added, buttons will be hidden */
+.hide {
+    display: none;
+}
+    
+form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #005c7a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Profile Styling */
+        .profile {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .editable-box {
+            margin-bottom: 10px;
+        }
+
+    </style>
+
+</body>
+
+</html>

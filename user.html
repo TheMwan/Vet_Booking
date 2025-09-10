@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - VETZ</title>
+    <link rel="stylesheet" href="styles2.css">
+    <script defer>
+        // Function to open the Add Pet modal
+        function openAddPetModal() {
+            document.getElementById("addPetModal").style.display = "block";
+            document.getElementById("modalOverlay").style.display = "block"; // Show the overlay
+        }
+
+        function closeAddPetModal() {
+            document.getElementById("addPetModal").style.display = "none";
+            document.getElementById("modalOverlay").style.display = "none"; // Hide the overlay
+        }
+
+        window.onclick = function(event) {
+        if (event.target == document.getElementById('addPetModal')) {
+            closeAddPetModal();
+        }}
+
+        function logout() {
+            if (confirm('Are you sure you want to log out?')) {
+                window.location.href = 'index_login.html';
+            }
+        }
+
+        function toggleEditMode() {
+            const editBtn = document.getElementById('editBtn');
+            const saveBtn = document.getElementById('saveBtn');
+            const userForm = document.getElementById('userForm');
+
+            // Check if Save button is visible (i.e., in edit mode)
+            const isEditing = saveBtn.style.display === 'inline-block';
+
+            if (isEditing) {
+                // Switch to view mode
+                saveBtn.style.display = 'none';
+                editBtn.style.display = 'inline-block';
+
+                // Disable the input fields
+                document.getElementById('UserName').disabled = true;
+                document.getElementById('Name').disabled = true;
+                document.getElementById('Email').disabled = true;
+                document.getElementById('Phone').disabled = true;
+
+                // Submit the form
+                userForm.submit();
+            } else {
+                // Switch to edit mode
+                editBtn.style.display = 'none';
+                saveBtn.style.display = 'inline-block';
+
+                // Enable the input fields
+                document.getElementById('UserName').disabled = false;
+                document.getElementById('Name').disabled = false;
+                document.getElementById('Email').disabled = false;
+                document.getElementById('Phone').disabled = false;
+            }
+        }
+
+        window.onload = function() {
+    fetch('user.php') // Fetch user data from user.php
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+                window.location.href = 'login.html'; // Redirect to login page if not logged in
+            } else {
+                // Populate the form fields with the user data
+                document.getElementById('UserName').value = data.UserName;
+                document.getElementById('Name').value = data.Name;
+                document.getElementById('Email').value = data.Email;
+                document.getElementById('Phone').value = data.Phone;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching user data:', error);
+            alert('An error occurred while fetching user data.');
+        });
+};
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+    // Fetch data from PHP to populate pet data
+    fetch('display_pet_data.php')
+        .then(response => response.json())
+        .then(pets => {
+            const petsSection = document.querySelector('.pets-section');
+            
+            // Clear existing content (but leave the add button intact)
+            const addBtn = document.querySelector('.add-pet-btn'); // Assuming your add button has a class 'add-pet-btn'
+            petsSection.innerHTML = '';  // Clear the section
+            
+            // Create and append "Your Pets" heading
+            const heading = document.createElement('h2');
+            heading.textContent = 'Your Pets';
+            petsSection.appendChild(heading);
+
+            // Append the add button back to the section
+            if (addBtn) {
+                petsSection.appendChild(addBtn);
+            }
+
+            if (pets.length > 0) {
+                pets.forEach(pet => {
+                    const petBox = document.createElement('div');
+                    petBox.classList.add('pet-box');
+                    
+                    // Create the delete button
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'x';
+                    deleteBtn.classList.add('delete-btn');
+                    deleteBtn.onclick = function(event) {
+                        // Show confirmation before sending the delete request
+                        const isConfirmed = confirm('Are you sure you want to delete this pet?');
+                        
+                        // If not confirmed, prevent the deletion
+                        if (!isConfirmed) {
+                            event.preventDefault(); // Prevent any action (including form submission)
+                            return; // Stop the function from executing further
+                        }
+                        
+                        // Send AJAX request to delete the pet if confirmed
+                        fetch('delete_patient.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `pet_id=${encodeURIComponent(pet.PatientID)}`
+                        })
+                        .then(response => {
+                            if (response.redirected) {
+                                // If redirected, reload the page to reflect the change
+                                window.location.href = response.url;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error deleting pet:', error);
+                            alert('Successfully deleted.');
+                            // Redirect in case of an error
+                            window.location.href = 'user.html';
+                        });
+                    };
+
+                    // Create the form for each pet
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = 'delete_patient.php';
+                    form.id = 'deleteForm' + pet.PatientID;
+
+                    // Populate form with pet data
+                    form.innerHTML = `
+                        <input type="hidden" name="pet_id" value="${pet.PatientID}">
+                        <div class="form-group">
+                            <label for="petID">Pet's ID</label>
+                            <input type="text" name="PetID" value="${pet.PatientID}" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="petName">Pet's Name</label>
+                            <input type="text" name="petName" value="${pet.petName}" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="Breed">Breed</label>
+                            <input type="text" name="Breed" value="${pet.Breed}" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="Species">Species</label>
+                            <input type="text" name="Species" value="${pet.Species}" required disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="Age">Age</label>
+                            <input type="number" name="Age" value="${pet.Age}" required disabled>
+                        </div>
+                        <div class="form-group form-group-checkbox">
+                            <label for="vaccinated">Vaccination Status:</label>
+                            <input type="checkbox" name="vaccinated" ${pet.VaccinationStatus ? 'checked' : ''} disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="MedicalHistory">Medical History</label>
+                            <input type="text" name="MedicalHistory" value="${pet.MedicalHistory}" required disabled>
+                        </div>
+                    `;
+                    
+                    // Append the delete button to the form
+                    form.appendChild(deleteBtn);
+                    petBox.appendChild(form);
+
+                    // Append the petBox to the pets-section
+                    petsSection.appendChild(petBox);
+                });
+            } else {
+                // Append "No pets found" message to the section
+                const noPetsMessage = document.createElement('p');
+                noPetsMessage.textContent = 'No pets found.';
+                petsSection.appendChild(noPetsMessage);
+            }
+        })
+        .catch(error => console.error('Error fetching pet data:', error));
+});
+
+
+
+    </script>
+</head>
+
+<body>
+
+    <!-- Navbar Section -->
+    <header class="navbar">
+        <div class="container">
+            <h1 class="logo">VETZ</h1>
+            <nav class="nav-center">
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="book-appointment.html">Book Appointment</a></li>
+                    <li><a href="follow-up.php">Follow Up</a></li>
+                    <li><a href="pet_care.php">Pet Care</a></li>
+                    <li><a href="patient-history.html">Patient History</a></li>
+                    <li><a href="user.html">Profile</a></li>
+                    <li><a href="user_report.php">Report</a></li>
+                </ul>
+            </nav>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </header>
+
+    <!-- Profile Section -->
+    <div class="container">
+        <h2>User Profile</h2>
+        <div class="profile">
+            <div class="user-info">
+                <form id="userForm" method="POST" action="update-profile.php">
+                    <div class="form-group">
+                        <label for="UserName">Username</label>
+                        <input type="text" id="UserName" name="UserName" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Name</label>
+                        <input type="text" id="Name" name="Name" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email</label>
+                        <input type="email" id="Email" name="Email" required disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="Phone">Phone</label>
+                        <input type="phone" id="Phone" name="Phone" required disabled>
+                    </div>
+                    <button type="button" id="editBtn" onclick="toggleEditMode()">Edit</button>
+                    <button type="submit" id="saveBtn" style="display:none;">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Add Pet Modal -->
+    <div id="addPetModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeAddPetModal()">&times;</span>
+            <h3>Add a New Pet</h3>
+            <form id="addPetForm" action="Patient.php" method="POST">
+                <label for="petName">Pet Name</label>
+                <input type="text" id="petName" name="petName" placeholder="Enter pet's name" required>
+        
+                <label for="Breed">Breed</label>
+                <input type="text" id="Breed" name="Breed" placeholder="Enter breed" required>
+        
+                <label for="Species">Species</label>
+                <input type="text" id="Species" name="Species" placeholder="Enter species (e.g., Dog, Cat)" required>
+        
+                <label for="Age">Age</label>
+                <input type="number" id="Age" name="Age" placeholder="Enter age of pet" required>
+        
+                <label for="vaccinated">Vaccinated</label>
+                <input type="checkbox" id="vaccinated" name="vaccinated" value="1"> <!-- Vaccinated checkbox -->
+        
+                <label for="MedicalHistory">Medical History</label>
+                <textarea id="MedicalHistory" name="MedicalHistory" placeholder="Enter medical history (if any)" rows="4"></textarea>
+        
+                <button type="submit">Add Pet</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="pets-section">
+        <h3>Your Pets</h3>
+        <div id="petList">
+            <button class="add-pet-btn" onclick="openAddPetModal()">+ Add Pet</button>
+            
+        </div>
+    </div>
+    
+        </div>
+    </div>    
+        
+    <!-- Modal Overlay (for backdrop) -->
+    <div id="modalOverlay" class="modal-overlay" style="display: none;" onclick="closeAddPetModal()"></div>
+    
+
+    <!-- Footer Section -->
+    <footer>
+
+         <div class="footer-container">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>Email: contact@vetzclinic.com</p>
+                <p>Phone: +1 (800) 555-0199</p>
+                <p>Address: 123 Pet Care Ave, Pet City, PC 12345</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="book-appointment.html">Book Appointment</a></li>
+                    <li><a href="follow-up.html">Follow Up</a></li>
+                    <li><a href="pet-care.html">Pet Care</a></li>
+                    <li><a href="patient-history.html">Patient History</a></li>
+                    <li><a href="user.html">Profile</a></li> </ul>
+            </div>
+        </div>
+
+        <p>&copy; 2024 VETZ Clinic. All rights reserved.</p>
+
+    </footer>
+
+    <style>
+        /* Navbar */
+        .navbar {
+            background-color: #013251;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Centering the nav links */
+        .nav-center {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .nav-links {
+            list-style-type: none;
+            display: inline-flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00aaff;
+        }
+
+        /* Logo */
+        .logo {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: auto;
+        }
+
+        /* Logout button styling */
+        .logout-btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .logout-btn {
+                margin-top: 10px;
+            }
+        }
+        
+        /* Modal style */
+        .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the modal */
+    width: 500px; /* Modal box width */
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    z-index: 1001; /* Make sure the modal is on top of other content */
+    box-shadow: none; /* Remove the shadow around modal */
+}
+
+/* If you have a backdrop, this removes the dark background */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* Make it transparent */
+    z-index: 1000; /* Make sure it's under the modal */
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%; /* Ensure the modal scales to fit its container */
+    max-width: 400px; /* Max width to ensure responsiveness */
+    box-shadow: none; /* Remove the shadow around modal content */
+}
+
+
+/* Center h3 text */
+.modal-content h3 {
+    text-align: center;  /* Center the h3 text */
+}
+
+/* Container for checkbox and textarea */
+.checkbox-textarea {
+    display: flex;
+    align-items: center; /* Align items vertically in the middle */
+    justify-content: space-between; /* Create space between checkbox and textarea */
+}
+
+/* Make the checkbox and textarea align on the same line */
+.checkbox-textarea label {
+    margin-right: 10px; /* Add some spacing between the label and the input */
+}
+
+.checkbox-textarea input[type="checkbox"] {
+    margin-right: 10px; /* Add spacing between checkbox and label */
+}
+
+.checkbox-textarea textarea {
+    flex: 1;  /* Make the textarea take the remaining space */
+    margin-left: 10px; /* Add some spacing between the checkbox and textarea */
+}
+
+/* Make textarea wider for Medical History */
+textarea#MedicalHistory {
+    width: 100%;            /* Full width */
+    max-width: 100%;        /* Ensure it doesn't exceed the parent container's width */
+    margin-top: 10px;       /* Space above the textarea */
+    padding: 8px;           /* Padding for better appearance */
+    border-radius: 4px;     /* Rounded corners */
+    border: 1px solid #ccc; /* Border for the textarea */
+    resize: vertical;      /* Allow user to resize vertically */
+}
+
+
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #005c7a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        form button:hover {
+            background-color: #007399;
+        }
+
+        .editable-box {
+            margin-bottom: 15px;
+        }
+
+        .editable-box input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-size: 14px;
+        }
+
+        #saveBtn {
+            background-color: #28a745;
+        }
+
+        #saveBtn:hover {
+            background-color: #218838;
+        }
+
+        #editBtn {
+            background-color: #007bff;
+        }
+
+        #editBtn:hover {
+            background-color: #0056b3;
+        }
+
+       /* Footer */
+footer {
+    background-color: #013251;
+    color: white;
+    padding: 20px 0;
+    width: 100%;
+    box-sizing: border-box;  /* Ensure padding doesn't affect the width */
+    position: relative;
+}
+
+.footer-container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    text-align: left;
+}
+
+.footer-section {
+    text-align: center;
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.footer-section p,
+.footer-section ul {
+    font-size: 14px;
+    color: #cfd8dc;
+    line-height: 1.5;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin: 5px 0;
+}
+
+.footer-section ul li a {
+    color: #cfd8dc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #00aaff;
+}
+
+footer p {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #b0bec5;
+    text-align: center;
+}
+
+/* Full width footer on all screens */
+footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 20px 0;
+}
+
+        /* Logo */
+        .logo {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: auto;
+        }
+
+        /* Logout button styling */
+        .logout-btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .logout-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            .logout-btn {
+                margin-top: 10px;
+            }
+        }
+
+
+
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #005c7a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Profile Styling */
+        .profile {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .editable-box {
+            margin-bottom: 10px;
+        }
+
+        .pets-section {
+            margin-top: 20px;
+        }
+
+        .add-pet-btn {
+            background-color: #00aaff;
+            padding: 10px 20px;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-pet-btn:hover {
+            background-color: #0088cc;
+        }
+
+        /* Initially hide save button */
+#saveBtn {
+    display: none;
+}
+
+/* When "show" class is added, buttons will be visible */
+.show {
+    display: inline-block;
+}
+
+/* When "hide" class is added, buttons will be hidden */
+.hide {
+    display: none;
+}
+
+.pets-section {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+#petList {
+    margin-bottom: 20px;
+}
+
+.add-pet-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pets-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center; /* Align boxes to the center horizontally */
+    padding: 20px;
+    height: auto; /* Allow the height to grow with content */
+    box-sizing: border-box;
+    gap: 20px; /* Add spacing between the pet boxes */
+}
+
+.pet-box {
+    position: relative;
+    background-color: #ffffff;
+    padding: 10px;
+    width: 100%;
+    max-width: 350px;
+    height: auto; /* Adjust height based on content */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 10px 0; /* Ensure spacing in case gap is unsupported */
+}
+
+.pet-box .form-group {
+    margin-bottom: 10px; /* Provide consistent spacing between fields */
+}
+
+.pet-box label {
+    font-size: 12px;
+    margin-bottom: 3px;
+    display: inline-block;
+}
+
+.pet-box input[type="text"],
+.pet-box input[type="number"],
+.pet-box input[type="checkbox"] {
+    font-size: 12px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.pet-box .form-group-checkbox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Add space below */
+    justify-content: flex-start; /* Align to the left */
+}
+
+.pet-box .form-group-checkbox label {
+    margin-right: 10px; /* Space between label and checkbox */
+}
+
+.pet-box .form-group-checkbox input[type="checkbox"] {
+    margin-left: 0; /* Remove extra margin */
+}
+
+.delete-btn {
+    position: absolute;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    top: -5px;
+    left: auto; /* Adjust if necessary */
+    font-size: 15px;
+    line-height: 0px; /* Ensure text is vertically centered */
+    text-align: center; /* Centers the "×" inside */
+    padding: 0px; /* Shifts text to the left slightly */
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+
+.form-group {
+    margin-bottom: 12px; /* Reduced margin for a smaller layout */
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    font-size: 14px; /* Slightly smaller label font */
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 6px; /* Reduced padding to make inputs smaller */
+    font-size: 13px; /* Slightly smaller font for input */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+}
+
+input[disabled] {
+    background-color: #e9e9e9;
+}
+
+
+    </style>
+
+</body>
+
+</html>

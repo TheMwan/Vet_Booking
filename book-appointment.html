@@ -17,9 +17,11 @@
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="book-appointment.html">Book Appointment</a></li>
-                    <li><a href="follow-up.html">Follow-up</a></li>
-                    <li><a href="pet-care.html">Pet-Care</a></li>
+                    <li><a href="follow-up.php">Follow Up</a></li>
+                    <li><a href="pet_care.php">Pet Care</a></li>
                     <li><a href="patient-history.html">Patient History</a></li>
+                    <li><a href="user.html">Profile</a></li>
+                    <li><a href="user_report.php">Report</a></li>
                 </ul>
             </nav>
         </div>
@@ -28,24 +30,27 @@
     <!-- Appointment Booking Form -->
     <div class="container">
         <h2>Book an Appointment</h2>
-        <form id="appointmentForm" action="submit-booking.php" method="POST">
-            <label for="petName">Pet Name</label>
+        <form id="appointmentForm" action="booking.php" method="POST">
+            <label for="petID">Pet's ID</label>
+            <input type="text" id="petID" name="PatientID" placeholder="Enter pet's ID" required>
+        
+            <label for="petName">Pet's Name</label>
             <input type="text" id="petName" name="petName" placeholder="Enter pet's name" required>
         
             <label for="ownerName">Owner's Name</label>
-            <input type="text" id="ownerName" name="ownerName" placeholder="Enter owner's name" required>
-
+            <input type="text" id="ownerName" name="OwnerName" placeholder="Enter owner's name" required>
+        
             <label for="contact">Contact</label>
-            <input type="text" id="contact" name="contact" placeholder="Enter owner's contact" required>
+            <input type="text" id="contact" name="Contact" placeholder="Enter owner's contact" required>
         
             <label for="appointmentDate">Date</label>
-            <input type="date" id="appointmentDate" name="appointmentDate" required>
+            <input type="date" id="appointmentDate" name="AppointmentDate" required>
         
             <label for="appointmentTime">Time</label>
-            <input type="time" id="appointmentTime" name="appointmentTime" required>
+            <input type="time" id="appointmentTime" name="AppointmentTime" required>
         
             <button type="submit">Confirm Appointment</button>
-        </form>        
+        </form>       
     </div>
 
 </body>

@@ -5,10 +5,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient History</title>
     <link rel="stylesheet" href="styles.css">
+    
+    <script>
+       document.addEventListener('DOMContentLoaded', function () {
+    const searchForm = document.getElementById('searchForm');
+    const petsSection = document.querySelector('.pets-section');
+
+    searchForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Get the entered Pet ID
+        const petIdInput = document.getElementById('PatientID').value.trim();
+
+        // Check if the Pet ID input is empty
+        if (!petIdInput) {
+            alert("Pet ID is required. Please enter a valid Pet ID.");
+            return;  // Stop the function if Pet ID is empty
+        }
+
+        // Log the Pet ID to check what is being sent
+        console.log("Pet ID entered:", petIdInput);
+
+        // Fetch pet data for the entered Pet ID
+        fetch(`patient_history.php?petId=${encodeURIComponent(petIdInput)}`)
+            .then(response => response.json())
+            .then(data => {
+                petsSection.innerHTML = ''; // Clear previous results
+
+                if (data.error) {
+                    petsSection.innerHTML = `<p class="error">${data.error}</p>`;
+                } else {
+                    // Create a pet box container
+                    const petBox = document.createElement('div');
+                    petBox.classList.add('pet-box', 'row'); // Add 'row' class for layout
+                    petBox.style.width = '90%'; // Make the box wider
+                    petBox.style.margin = '0 auto'; // Center the box
+
+                    // Pet and Appointment details
+                    petBox.innerHTML = `
+                        <div class="col-md-6"> <!-- Left column -->
+                            <div class="form-group">
+                                <label>Pet's ID:</label>
+                                <input type="text" value="${data.PatientID}" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>Pet's Name:</label>
+                                <input type="text" value="${data.petName}" disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6"> <!-- Right column -->
+                            ${data.appointments.map(appointment => `
+                                <div class="form-group">
+                                    <label>Appointment ID:</label>
+                                    <input type="text" value="${appointment.AppointmentID}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Appointment Date:</label>
+                                    <input type="text" value="${appointment.AppointmentDate}" disabled>
+                                </div>
+                            `).join('')}
+                            ${data.followups.map(followup => `
+                                <div class="form-group">
+                                    <label>FollowUp ID:</label>
+                                    <input type="text" value="${followup.FollowUpID}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Next Check-Up Date:</label>
+                                    <input type="text" value="${followup.NextCheckUpDate}" disabled>
+                                </div>
+                            `).join('')}
+                            ${data.treatmentPlans.map(plan => `
+                                <div class="form-group">
+                                    <label>Treatment Plan ID:</label>
+                                    <input type="text" value="${plan.TreatmentPlanID}" disabled>
+                                </div>
+                                <div class="form-group">
+                                    <label>Health Status:</label>
+                                    <input type="text" value="${plan.HealthStatus}" disabled>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+
+                    // Append petBox to petsSection
+                    petsSection.appendChild(petBox);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching pet data:', error);
+                petsSection.innerHTML = `<p class="error">An error occurred. Please try again later.</p>`;
+            });
+    });
+});
+
+    </script>
 </head>
 <body>
-
-    <!-- Navigation Bar -->
     <header class="navbar">
         <div class="container">
             <h1 class="logo">VETZ</h1>
@@ -16,33 +108,106 @@
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="book-appointment.html">Book Appointment</a></li>
-                    <li><a href="follow-up.html">Follow-up</a></li>
-                    <li><a href="pet-care.html">Pet-Care</a></li>
+                    <li><a href="follow-up.php">Follow Up</a></li>
+                    <li><a href="pet_care.php">Pet Care</a></li>
                     <li><a href="patient-history.html">Patient History</a></li>
+                    <li><a href="user.html">Profile</a></li>
+                    <li><a href="user_report.php">Report</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-
-    <!-- Patient History Section -->
-    <section class="patient-history">
+    
+    <section class="main-content">
         <div class="container">
-            <h2>Patient History</h2>
+            <h1>Pet History</h1>
             <form id="searchForm">
-                <label for="petId">Pet ID</label>
-                <input type="text" id="petId" name="petId" placeholder="Enter Pet ID" required>
-                <button type="submit">View History</button>
+                <label for="PatientID">Enter Pet's ID:</label>
+                <input type="text" id="PatientID" placeholder="Pet ID" required>
+                <button type="submit">Search</button>
             </form>
-
-            <!-- Pet Information Card -->
-            <div class="pet-info-card">
-                <p><strong>Pet Name:</strong> Max</p>
-                <p><strong>Health Status:</strong> Healthy</p>
-                <p><strong>Vaccination Records:</strong> Up-to-date</p>
-                <p><strong>Treatment Details:</strong> Last treatment on 01/10/2024</p>
+            <div class="pets-section">
+                <!-- Data will be inserted here -->
             </div>
         </div>
     </section>
 
+<style>
+   
+   body, .container {
+    width: 100%;  /* Ensure the body/container can take up the full width */
+    margin-top: 50px;
+    padding: 0;
+}
+
+.pets-section {
+    display: flex;
+    flex-direction: column;
+    width: 200%;  /* Set the section to 200% width */
+    max-width: 200%;  /* Ensure it doesn't go beyond 200% */
+    align-items: center;  /* Center boxes horizontally */
+    padding: 20px;
+    box-sizing: border-box;
+    gap: 10px;  /* Space between pet boxes */
+    margin-top: 100px;  /* Increase space from the top (makes it farther from the top) */
+    justify-content: start;
+    margin-left: -50%;  /* Offset by half of the width to center */
+    margin-right: auto;
+}
+
+body {
+    overflow-x: hidden;  /* Prevent horizontal scroll if not needed */
+}
+
+.pet-box {
+    background-color: #ffffff;
+    padding: 20px; /* Reduced padding for a shorter box */
+    width: 100%;
+    align-items: center;
+    justify-content: start;
+    max-width: 1200px; /* Increased width for a fatter box */
+    height: auto; /* Dynamically adjust height to fit content */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px 0; /* Add space between boxes */
+    box-sizing: border-box;
+}
+
+.view-history-button {
+    margin-top: 0px; /* Increased margin to push "View History" button further down */
+    text-align: center;
+}
+
+/* Back button margin adjustment */
+.back-button {
+    margin-top: 50px; /* Maintain smaller margin for the back button */
+    text-align: center;
+}
+
+
+
+.pet-box .form-group {
+    margin-bottom: 5px; /* Tighten spacing between fields */
+}
+
+.pet-box label {
+    font-size: 14px;
+    margin-bottom: 3px; /* Reduce space between label and input */
+    display: block;
+    font-weight: bold;
+}
+
+.pet-box input[type="text"],
+.pet-box input[type="number"],
+.pet-box textarea {
+    font-size: 14px;
+    padding: 6px; /* Compact input padding */
+    width: 100%; /* Full width of the container */
+    border: 1px solid #ddd; /* Add light borders */
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+</style>
 </body>
 </html>

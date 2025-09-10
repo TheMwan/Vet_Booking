@@ -1,0 +1,276 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f9fc;
+    color: #333;
+}
+
+/* Container */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #013251;
+    padding: 15px 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #00aaff;
+}
+
+/* Admin Dashboard */
+.admin-quick-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.admin-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    padding: 20px;
+    flex: 1 1 calc(33.33% - 40px); /* Three cards per row */
+    max-width: 350px; /* Increased box size */
+    min-height: 450px; /* Ensure boxes are taller */
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.admin-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.admin-card img {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Larger image size */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px; /* Adds space between image and text */
+}
+
+.admin-card h3 {
+    margin: 15px 0;
+    font-size: 20px; /* Larger heading font */
+    color: #004d80;
+}
+
+.admin-card p {
+    font-size: 16px; /* Larger paragraph font */
+    color: #555;
+    line-height: 1.5;
+}
+
+.admin-card a {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Matches text color */
+    transition: color 0.3s ease;
+}
+
+.admin-card a:hover {
+    color: #007399; /* Add subtle hover effect for links */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-quick-links {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-card {
+        flex: 1 1 100%; /* Full width for small screens */
+    }
+}
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f9fc;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #013251;
+    padding: 15px 0;
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-links {
+    list-style-type: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav-links a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #00aaff;
+}
+
+/* Login Form Container */
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    margin: auto;
+    background-color: #ffffff;
+    padding: 40px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Login Form Title */
+.login-container h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form Labels */
+.login-container label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #004d80;
+    text-align: left;
+}
+
+/* Input Fields */
+.login-container input[type="email"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.login-container input[type="email"]:focus,
+.login-container input[type="password"]:focus {
+    border-color: #005c7a;
+    outline: none;
+}
+
+/* Login Button */
+.login-container form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #005c7a;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.login-container form button:hover {
+    background-color: #004d80;
+}
+
+/* Switch Form Link */
+.switch-form {
+    margin-top: 15px;
+}
+
+.switch-form p {
+    font-size: 14px;
+    color: #333;
+}
+
+.switch-form a {
+    color: #007399;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.switch-form a:hover {
+    text-decoration: underline;
+}

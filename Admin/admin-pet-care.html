@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Care</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="container">
+            <h1 class="logo">VETZ</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="admin-dashboard.html">Dashboard</a></li>
+                    <li><a href="admin-appointments.php">View Appointments</a></li>
+                    <li><a href="admin-follow-up.html">Follow Up</a></li>
+                    <li><a href="admin-pet-care.html">Pet Care</a></li>
+                    <li><a href="admin-user.html">Admin</a></li>
+                    <li><a href="user_report.php">Report</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Pet Care Content -->
+    <div class="container">
+        <h2>Pet Care Information</h2>
+        <form action="admin-pet-care.php" method="POST">
+            <label for="PatientID">Pet's ID</label>
+            <input type="text" id="petID" name="PatientID" placeholder="Enter Pet's ID" required>
+
+            <label for="HealthStatus">Health Status</label>
+            <textarea id="healthStatus" name="HealthStatus" placeholder="Enter health status" required></textarea>
+
+            <label for="VaccinationRecords">Vaccination Records</label>
+            <textarea id="vaccinationRecords" name="VaccinationRecords" placeholder="Enter vaccination records" required></textarea>
+
+            <label for="LastTreatmentDate">Last Treatment Date</label>
+            <input type="date" id="lastTreatmentDate" name="LastTreatmentDate" required>
+
+            <label for="NextCheckUpDate">Next Appointment Date</label>
+            <input type="date" id="nextCheckUpDate" name="NextCheckUpDate" required>
+
+            <label for="NextCheckUpTime">Next Appointment Time</label>
+            <input type="time" id="nextCheckUpTime" name="NextCheckUpTime" required>
+
+            <label for="SpecialInstructions">Special Instructions</label>
+            <textarea id="specialInstructions" name="SpecialInstructions" placeholder="Enter special instructions" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

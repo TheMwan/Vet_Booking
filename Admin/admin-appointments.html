@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Manage Appointments</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f9fc;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #013251;
+            padding: 15px 0;
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style-type: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00aaff;
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #013251;
+        }
+
+        /* Admin Table */
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .admin-table th {
+            background-color: #013251;
+            color: white;
+        }
+
+        .admin-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .admin-table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .admin-table button {
+            padding: 6px 12px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .admin-table button.view {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .admin-table button.edit {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .admin-table button.danger {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .admin-table button:hover {
+            opacity: 0.8;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: left;
+        }
+
+        .modal-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #013251;
+        }
+
+        .modal-body {
+            margin-bottom: 15px;
+        }
+
+        .modal-footer {
+            text-align: right;
+        }
+
+        .modal-footer button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .close-btn {
+            background-color: #d9534f;
+            color: white;
+        }
+
+        .save-btn {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .close-btn:hover, .save-btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="container">
+            <h1 class="logo">VETZ Admin</h1>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="admin-dashboard.html">Dashboard</a></li>
+                    <li><a href="admin-appointments.php">View Appointments</a></li>
+                    <li><a href="admin-follow-up.html">Follow Up</a></li>
+                    <li><a href="admin-pet-care.html">Pet Care</a></li>
+                    <li><a href="admin-user.html">Admin</a></li>
+                    <li><a href="user_report.php">Report</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>Manage Appointments</h2>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Appointment ID</th>
+                    <th>Pet Name</th>
+                    <th>Owner Name</th>
+                    <th>Contact</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Max</td>
+                    <td>John Doe</td>
+                    <td>123-456-7890</td>
+                    <td>2024-11-25</td>
+                    <td>10:00 AM</td>
+                    <td>Scheduled</td>
+                    <td>
+                        <button class="view" onclick="openViewModal({pet_name: 'Max', owner_name: 'John Doe', contact: '123-456-7890', appointment_date: '2024-11-25', appointment_time: '10:00 AM', status: 'Scheduled'})">View</button>
+                        <button class="edit" onclick="openEditModal({id: 1, pet_name: 'Max', owner_name: 'John Doe', contact: '123-456-7890', appointment_date: '2024-11-25', appointment_time: '10:00 AM', status: 'Scheduled'})">Edit</button>
+                        <button class="danger">Cancel</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">View Appointment</div>
+            <div class="modal-body">
+                <p><strong>Pet Name:</strong> <span id="viewPetName"></span></p>
+                <p><strong>Owner Name:</strong> <span id="viewOwnerName"></span></p>
+                <p><strong>Contact:</strong> <span id="viewContact"></span></p>
+                <p><strong>Date:</strong> <span id="viewDate"></span></p>
+                <p><strong>Time:</strong> <span id="viewTime"></span></p>
+                <p><strong>Status:</strong> <span id="viewStatus"></span></p>
+            </div>
+            <div class="modal-footer">
+                <button class="close-btn" onclick="closeModal('viewModal')">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">Edit Appointment</div>
+            <form action="update-appointment.php" method="POST">
+                <input type="hidden" name="id" id="editId">
+                <div class="modal-body">
+                    <label>Pet Name:</label>
+                    <input type="text" name="pet_name" id="editPetName" required>
+                    <label>Owner Name:</label>
+                    <input type="text" name="owner_name" id="editOwnerName" required>
+                    <label>Contact:</label>
+                    <input type="text" name="contact" id="editContact" required>
+                    <label>Date:</label>
+                    <input type="date" name="appointment_date" id="editDate" required>
+                    <label>Time:</label>
+                    <input type="time" name="appointment_time" id="editTime" required>
+                    <label>Status:</label>
+                    <select name="status" id="editStatus" required>
+                        <option value="Scheduled">Scheduled</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Canceled">Canceled</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="close-btn" onclick="closeModal('editModal')">Cancel</button>
+                    <button type="submit" class="save-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openViewModal(data) {
+            document.getElementById('viewPetName').textContent = data.pet_name;
+            document.getElementById('viewOwnerName').textContent = data.owner_name;
+            document.getElementById('viewContact').textContent = data.contact;
+            document.getElementById('viewDate').textContent = data.appointment_date;
+            document.getElementById('viewTime').textContent = data.appointment_time;
+            document.getElementById('viewStatus').textContent = data.status;
+            document.getElementById('viewModal').style.display = 'flex';
+        }
+
+        function openEditModal(data) {
+            document.getElementById('editId').value = data.id;
+            document.getElementById('editPetName').value = data.pet_name;
+            document.getElementById('editOwnerName').value = data.owner_name;
+            document.getElementById('editContact').value = data.contact;
+            document.getElementById('editDate').value = data.appointment_date;
+            document.getElementById('editTime').value = data.appointment_time;
+            document.getElementById('editStatus').value = data.status;
+            document.getElementById('editModal').style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function cancelAppointment(id) {
+            if (confirm('Are you sure you want to cancel this appointment?')) {
+                window.location.href = `cancel-appointment.php?id=${id}`;
+            }
+        }
+    </script>
+</body>
+</html>
